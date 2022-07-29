@@ -3,7 +3,7 @@
         private $host = "127.0.0.1";
         private $database_name = "backend";
         private $username = "root";
-        private $password = "";
+        private $password = "root";
         public $conn;
         public function getConnection() {
             $this->conn = null;
@@ -19,4 +19,3 @@
 
 
 ?>
-

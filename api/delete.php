@@ -13,13 +13,14 @@
         $item = new User($db);
         $data = json_decode(file_get_contents("php://input"));
 
-        $item->userId = $data->userId;
+        
+        $item->userId = $data->Id;
 
         try{
             $item->deleteUser();
             echo json_encode("ok");
         }catch(PDOException $exception){
-            echo "database error " . $exception->getMessage();
+            echo "Database error " . $exception->getMessage();
     
         }
 

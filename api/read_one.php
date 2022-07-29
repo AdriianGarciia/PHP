@@ -10,28 +10,35 @@
 
     $database = new Database();
     $db = $database->getConnection();
-    $item = new User($db);
-    $item->userId = isset($_GET['userId']) ? $_GET['userId'] : die();
-    $item->getSingleUser();
+    $items = new User($db);
+    $stmt = $items->getUsers();
+    $itemCount = $stmt->rowCount();
 
+   // echo json_encode($stmt);
+    //echo json_encode($itemCount);
+    if($itemCount > 0){
+        $userArr= array();
+        $userArr["body"]= array();
+        $userArr["itemCount"]=$itemCount;
 
-    if ($item->name != null) {
-        $data= array(
-            "userId"=> $item->userId,
-             "name" => $item->name,
-             "phone" => $item->phone,
-             "date" => $item->date,
-             "status" => $item->status 
-        );
-        echo json_encode($data);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $data= array(
+                "contactId"=> $contactId,
+                 "name" => $name,
+                 "phone" => $phone,
+                 "date" => $date,
+                 "status" => $status 
+            );
+            array_push($userArr["body"], $data);
+            
+        }
+        echo json_encode($userArr);
     }else{
         http_response_code(404);
         echo json_encode(
-            array("Message" => "User not found")
+            array("message " => "Not records found")
         );
     }
-
-    //echo json_encode($stmt);
-    //echo json_encode($itemCount);
 
 ?>

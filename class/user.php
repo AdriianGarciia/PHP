@@ -48,7 +48,7 @@
                 date = :date,
                 status = :status 
                 WHERE 
-                    contactId= :userId";
+                    contactId= :contactId";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(":name", $this->name);
             $stmt->bindParam(":phone", $this->phone);
@@ -65,7 +65,7 @@
         }
 
         public function deleteUser(){
-            $sqlQuery = "DELETE FROM " . $this->db_table . "
+            $sqlQuery = "DELETE FROM " . $this->db_table . " 
 
                      WHERE 
 
@@ -73,6 +73,10 @@
 
                 $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->bindParam(":userId", $this->userId);
+                $stmt->bindParam(":name", $this->name);
+            $stmt->bindParam(":phone", $this->phone);
+            $stmt->bindParam(":date", $this->date);
+            $stmt->bindParam(":status", $this->status);
     
     
                 if ($stmt->execute()) {
@@ -103,3 +107,6 @@
 
     
 ?>
+
+
+    
